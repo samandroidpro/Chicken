@@ -1,4 +1,42 @@
-
+local d = true
+local c = game.Players.LocalPlayer
+for a, b in pairs(getreg()) do
+    if type(b) == "function" then
+        if getfenv(b).HoldProgress then
+            local a = getfenv(b).HoldProgress
+            getfenv(b).HoldProgress = function(...)
+                if d then
+                    return true
+                else
+                    return a(...)
+                end
+                return
+            end
+        end
+    end
+end
+do
+    local function b(a)
+        for a, b in pairs(getreg()) do
+            if type(b) == "function" then
+                if getfenv(b).HoldProgress then
+                    local a = getfenv(b).HoldProgress
+                    getfenv(b).HoldProgress = function(...)
+                        if d then
+                            return true
+                        else
+                            return a(...)
+                        end
+                        return
+                    end
+                end
+            end
+        end
+        b(c.Character)
+        c.CharacterAdded:Connect(b)
+    end
+end
+wait(5)
 --[[
 AztupBrew(Fork of IronBrew2): obfuscation; Version 2.7.2
 ]]
